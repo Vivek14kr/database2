@@ -1,0 +1,32 @@
+ db.users.find({movie_name:{$eq:"Prometheus"}},{movie_name:1, production:1}).pretty()
+
+
+db.users.find({movie_name:{$ne:"Prometheus"}},{movie_name:1, production:1}).pretty()
+
+
+ db.users.find({"budget":{$gte:18000}},{movie_name:1, production:1}).pretty()
+
+
+ > db.users.find({"budget":{$gt:18000}},{movie_name:1, production:1}).pretty()
+
+> db.users.find({"budget":{$lt:18000}},{movie_name:1, production:1}).pretty()
+
+> db.users.find({"budget":{$lte:18000}},{movie_name:1, production:1}).pretty()
+
+>  db.users.find({$and: [{"budget":{$gt:10000}}, {"production":{$gt:2000}}]},{movie_name:1, production:1}).pretty()
+
+> db.users.find({$or: [{"budget":{$gt:10000}}, {"production":{$gt:2000}}]},{movie_name:1, production:1}).pretty()
+
+db.users.find({$nor: [{"budget":{$gt:10000}}, {"production":{$gt:2000}}]},{movie_name:1, production:1}).pretty()
+
+ db.users.find({"budget":{$not:{$lt: 18000}}},{movie_name:1, production:1}).pretty()
+
+ db.users.find({$or:[{"budget":{$not:{$eq: 10000}}},{"production":{$not:{$eq:2000}}}]},{movie_name:1, production:1}).pretty()
+
+db.users.find({$and:[{"production":{$gte: 2000}},{"production":{$lte: 2010}}]},{movie_name:1, production:1}).pretty()
+
+db.users.find().sort({production: -1, movie_name: -1}).pretty()
+
+> db.users.find().sort({production: -1, movie_name: -1}).skip(5).pretty()
+
+db.movie.find({}).sort({production:-1, movie_name:-1}).pretty().limit(10).forEach(function(doc){db.movie.update({_id:doc._id},{$unset:{"movie_genre":""}})})
